@@ -10,6 +10,10 @@ def emotion_detector(text_to_analyse):
 
     emotion = formatted_response["emotionPredictions"][0]["emotion"]
 
+    if response.status_code == 400:
+        return {'anger': None, 'disgust': None, 'fear': None,
+            'joy': None, 'sadness': None, 'dominant_emotion': None}
+
     anger_score = emotion['anger']
     disgust_score = emotion["disgust"]
     fear_score = emotion["fear"]
@@ -21,7 +25,6 @@ def emotion_detector(text_to_analyse):
 
     return {'anger': anger_score, 'disgust': disgust_score, 'fear': fear_score,
             'joy': joy_score, 'sadness': sadness_score, 'dominant_emotion': dominant_emotion}
-
 
 """
 import json
