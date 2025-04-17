@@ -1,5 +1,4 @@
-import requests
-import json
+import requests; import json
 
 def emotion_detector(text_to_analyse):  
     url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'  
@@ -8,11 +7,14 @@ def emotion_detector(text_to_analyse):
     response = requests.post(url, json = myobj, headers=header)  # Send a POST request to the API with the text and headers    
     formatted_response = json.loads(response.text)
 
-    emotion = formatted_response["emotionPredictions"][0]["emotion"]
+    if not text_to_analyse.strip():  # Check for empty or blank input
+        return None
 
     if response.status_code == 400:
         return {'anger': None, 'disgust': None, 'fear': None,
             'joy': None, 'sadness': None, 'dominant_emotion': None}
+
+    emotion = formatted_response["emotionPredictions"][0]["emotion"]
 
     anger_score = emotion['anger']
     disgust_score = emotion["disgust"]
